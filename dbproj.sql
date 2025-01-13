@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `projectdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `projectdb`;
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for macos14 (arm64)
 --
 -- Host: localhost    Database: projectdb
 -- ------------------------------------------------------
--- Server version	8.0.40
+-- Server version	9.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -194,6 +192,88 @@ INSERT INTO `bandmember` VALUES (1,1,'2005-06-15','2010-12-01'),(1,2,'2005-06-15
 UNLOCK TABLES;
 
 --
+-- Table structure for table `concert`
+--
+
+DROP TABLE IF EXISTS `concert`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `concert` (
+  `ConId` int NOT NULL,
+  `VenId` int NOT NULL,
+  `ArtistId` int NOT NULL,
+  `ConDate` date NOT NULL,
+  `Status` enum('Scheduled','Cancelled','Completed') NOT NULL,
+  `ReqCapacity` int NOT NULL,
+  PRIMARY KEY (`ConId`),
+  KEY `VenId_idx` (`VenId`),
+  KEY `ArtistId_idx` (`ArtistId`),
+  CONSTRAINT `ArtistId` FOREIGN KEY (`ArtistId`) REFERENCES `artist` (`ArtistID`),
+  CONSTRAINT `VenId` FOREIGN KEY (`VenId`) REFERENCES `venues` (`VenId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `concert`
+--
+
+LOCK TABLES `concert` WRITE;
+/*!40000 ALTER TABLE `concert` DISABLE KEYS */;
+/*!40000 ALTER TABLE `concert` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `concerthistory`
+--
+
+DROP TABLE IF EXISTS `concerthistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `concerthistory` (
+  `ConId` int NOT NULL,
+  `ArtistId` int DEFAULT NULL,
+  `VenueId` int DEFAULT NULL,
+  `NumTickets` int DEFAULT NULL,
+  `ConDate` date DEFAULT NULL,
+  `Status` enum('Completed','Cancelled') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `concerthistory`
+--
+
+LOCK TABLES `concerthistory` WRITE;
+/*!40000 ALTER TABLE `concerthistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `concerthistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dba`
+--
+
+DROP TABLE IF EXISTS `dba`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dba` (
+  `Username` varchar(250) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL,
+  PRIMARY KEY (`Username`),
+  UNIQUE KEY `Username_UNIQUE` (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dba`
+--
+
+LOCK TABLES `dba` WRITE;
+/*!40000 ALTER TABLE `dba` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dba` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `genre`
 --
 
@@ -215,6 +295,32 @@ LOCK TABLES `genre` WRITE;
 /*!40000 ALTER TABLE `genre` DISABLE KEYS */;
 INSERT INTO `genre` VALUES (1,'Rock'),(2,'Jazz'),(3,'Classical'),(4,'Pop'),(5,'Electronic'),(6,'Rap'),(7,'House'),(8,'R&B'),(9,'Indie'),(10,'Soul');
 /*!40000 ALTER TABLE `genre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `log`
+--
+
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `log` (
+  `Username` varchar(250) NOT NULL,
+  `Time` datetime NOT NULL,
+  `Action` enum('Insert','Update','Delete') NOT NULL,
+  `Table` enum('person','band','album','concert','venue') NOT NULL,
+  KEY `usrname_idx` (`Username`),
+  CONSTRAINT `usrname` FOREIGN KEY (`Username`) REFERENCES `dba` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log`
+--
+
+LOCK TABLES `log` WRITE;
+/*!40000 ALTER TABLE `log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -363,12 +469,30 @@ INSERT INTO `track` VALUES (1,'Rocking in the Night',1,'00:03:45',1,'Lyrics for 
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'projectdb'
+-- Table structure for table `venues`
 --
 
+DROP TABLE IF EXISTS `venues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `venues` (
+  `VenId` int NOT NULL,
+  `VenName` varchar(250) DEFAULT NULL,
+  `Location` varchar(250) DEFAULT NULL,
+  `Capacity` int NOT NULL,
+  `ConcertsHeld` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`VenId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
--- Dumping routines for database 'projectdb'
+-- Dumping data for table `venues`
 --
+
+LOCK TABLES `venues` WRITE;
+/*!40000 ALTER TABLE `venues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `venues` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -379,4 +503,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-27 22:54:15
+-- Dump completed on 2025-01-13 21:22:44
