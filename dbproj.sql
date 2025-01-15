@@ -484,6 +484,7 @@ CREATE TABLE `venues` (
   `Location` varchar(250) DEFAULT NULL,
   `Capacity` int NOT NULL,
   `ConcertsHeld` int NOT NULL DEFAULT '0',
+  `DateOpened` date NOT NULL,
   PRIMARY KEY (`VenId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -506,4 +507,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-15 10:54:55
+-- Dump completed on 2025-01-15 21:59:50
