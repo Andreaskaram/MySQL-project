@@ -133,3 +133,87 @@ BEGIN
 END$
 
 DELIMITER ;
+
+
+-- TRITO PROCEDURE
+
+DELIMITER $$
+
+CREATE PROCEDURE VenueFinder (
+	IN GivenConId INT,
+    IN GivenReqCap INT,
+    OUT VenIdOutput INT,
+    OUT VenCapOutput INT
+)
+proc_label:BEGIN
+	DECLARE FoundStatus ENUM('Scheduled','Cancelled','Completed') DEFAULT NULL;
+    DECLARE FoundVenId INT DEFAULT NULL;
+    DECLARE FoundConDate DATE DEFAULT NULL;
+    
+    DECLARE TempVenId INT;
+    DECLARE TempVenCap INT;
+    DECLARE MaxScore INT DEFAULT -1;
+    DECLARE CurrentScore INT;
+    DECLARE debcount INT DEFAULT 0;
+    
+	-- Cursor for venues
+    DECLARE VenueCursor CURSOR FOR
+        SELECT VenId, Capacity FROM venues
+        WHERE Capacity >= GivenReqCap * 1.1
+        AND NOT EXISTS (
+			SELECT 1 FROM concert
+			WHERE ConDate = FoundConDate AND Status = 'Scheduled' AND concert.VenId = venues.VenId
+		);
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET TempVenId = NULL;
+    
+	-- Select required values for procedure
+    SELECT Status, VenId, ConDate INTO FoundStatus, FoundVenId, FoundConDate FROM concert WHERE ConId = GivenConId;
+    
+    IF FoundStatus IS NULL OR FoundStatus = 'Cancelled' THEN
+		SET VenIdOutput = NULL;
+        SET VenCapOutput = 0;
+		LEAVE proc_label;
+	END IF;
+    
+    IF FoundVenId IS NOT NULL THEN
+		SET VenIdOutput = FoundVenId;
+        SELECT Capacity INTO VenCapOutput FROM venues WHERE VenId = FoundVenId;
+        SELECT VenIdOutput, VenCapOutput, FoundConDate;
+        LEAVE proc_label;
+	END IF;
+    
+    
+    OPEN VenueCursor;
+
+	FETCH VenueCursor INTO TempVenId, TempVenCap;
+	WHILE TempVenId IS NOT NULL DO
+    
+		-- Call CalculateVenueScore for each venue
+		CALL CalculateVenueScore(TempVenId, @CurrentScore);
+
+		IF @CurrentScore IS NOT NULL THEN
+        SET debcount = debcount + @CurrentScore;
+		-- Check if this venue has the highest score
+			IF @CurrentScore > MaxScore THEN
+				SET MaxScore = @CurrentScore;
+				SET VenIdOutput = TempVenId;
+				SET VenCapOutput = TempVenCap;
+			END IF;
+        END IF;
+
+		FETCH VenueCursor INTO TempVenId, TempVenCap;
+	END WHILE;
+
+	CLOSE VenueCursor;
+
+	-- If no suitable venue is found, return VenId = NULL and VenCap = 0
+	IF MaxScore = -1 THEN
+		SET VenIdOutput = NULL;
+		SET VenCapOutput = 0;
+        Select 'No Eligible Venue Found!';
+	END IF;
+
+END $$
+
+DELIMITER ;

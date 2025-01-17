@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for macos14 (arm64)
 --
 -- Host: localhost    Database: projectdb
 -- ------------------------------------------------------
--- Server version	8.0.40
+-- Server version	9.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -200,17 +200,18 @@ DROP TABLE IF EXISTS `concert`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `concert` (
   `ConId` int NOT NULL AUTO_INCREMENT,
-  `VenId` int NOT NULL,
+  `VenId` int DEFAULT NULL,
   `ArtistId` int NOT NULL,
   `ConDate` date NOT NULL,
   `Status` enum('Scheduled','Cancelled','Completed') NOT NULL,
-  `ReqCapacity` int NOT NULL,
+  `ReqCapacity` int DEFAULT NULL,
   PRIMARY KEY (`ConId`),
+  UNIQUE KEY `ConId_UNIQUE` (`ConId`),
   KEY `VenId_idx` (`VenId`),
   KEY `ArtistId_idx` (`ArtistId`),
   CONSTRAINT `ArtistId` FOREIGN KEY (`ArtistId`) REFERENCES `artist` (`ArtistID`),
   CONSTRAINT `VenId` FOREIGN KEY (`VenId`) REFERENCES `venues` (`VenId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +220,7 @@ CREATE TABLE `concert` (
 
 LOCK TABLES `concert` WRITE;
 /*!40000 ALTER TABLE `concert` DISABLE KEYS */;
-INSERT INTO `concert` VALUES (1,1,1,'2024-03-15','Cancelled',1500),(2,2,2,'2024-05-20','Completed',9000),(3,3,3,'2023-10-10','Completed',1200),(4,4,4,'2024-01-05','Cancelled',2800),(5,5,5,'2024-07-12','Scheduled',4500),(6,6,6,'2023-09-15','Completed',1800),(7,7,7,'2024-06-25','Scheduled',3700),(8,8,8,'2023-08-30','Completed',800),(9,9,9,'2024-11-10','Scheduled',2300),(10,10,10,'2024-03-10','Scheduled',950),(11,1,1,'2025-03-15','Scheduled',1000),(13,1,2,'2026-05-20','Scheduled',1000);
+INSERT INTO `concert` VALUES (1,1,1,'2024-03-15','Cancelled',1500),(2,2,2,'2024-05-20','Completed',9000),(3,3,3,'2023-10-10','Completed',1200),(4,3,4,'2024-01-05','Cancelled',2800),(5,5,5,'2024-07-12','Scheduled',4500),(6,6,6,'2023-09-15','Completed',1800),(7,7,7,'2024-06-25','Scheduled',3700),(8,8,8,'2023-08-30','Completed',800),(9,9,9,'2024-11-10','Scheduled',2300),(10,10,10,'2024-03-10','Scheduled',950),(11,NULL,1,'2025-03-15','Scheduled',NULL),(13,NULL,2,'2026-05-20','Scheduled',NULL),(14,NULL,2,'2025-03-20','Scheduled',NULL),(15,2,3,'2026-05-20','Scheduled',5000);
 /*!40000 ALTER TABLE `concert` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -496,131 +497,9 @@ CREATE TABLE `venues` (
 
 LOCK TABLES `venues` WRITE;
 /*!40000 ALTER TABLE `venues` DISABLE KEYS */;
-INSERT INTO `venues` VALUES (1,'Athens Concert Hall','Athens, Greece',2000,350,'2005-06-15'),(2,'Thessaloniki Arena','Thessaloniki, Greece',10000,1200,'2010-09-10'),(3,'Patras Cultural Center','Patras, Greece',1500,450,'2000-03-25'),(4,'Heraklion Music Hall','Heraklion, Greece',3000,250,'2015-11-01'),(5,'Ioannina Open Theater','Ioannina, Greece',5000,800,'2018-05-20'),(6,'Larissa Exhibition Center','Larissa, Greece',4000,600,'2012-04-12'),(7,'Chania Concert Space','Chania, Greece',2500,150,'2020-01-01'),(8,'Kalamata Outdoor Stage','Kalamata, Greece',1000,50,'2017-07-15'),(9,'Rhodes Grand Theater','Rhodes, Greece',3500,700,'2008-10-05'),(10,'Corfu Philharmonic Hall','Corfu, Greece',1200,100,'1995-05-30');
+INSERT INTO `venues` VALUES (1,'Athens Concert Hall','Athens, Greece',2000,350,'2005-06-15'),(2,'Thessaloniki Arena','Thessaloniki, Greece',10000,1200,'2015-09-10'),(3,'Patras Cultural Center','Patras, Greece',1500,450,'2000-03-25'),(4,'Heraklion Music Hall','Heraklion, Greece',3000,250,'2015-11-01'),(5,'Ioannina Open Theater','Ioannina, Greece',5000,800,'2018-05-20'),(6,'Larissa Exhibition Center','Larissa, Greece',4000,600,'2012-04-12'),(7,'Chania Concert Space','Chania, Greece',2500,150,'2020-01-01'),(8,'Kalamata Outdoor Stage','Kalamata, Greece',1000,50,'2017-07-15'),(9,'Rhodes Grand Theater','Rhodes, Greece',3500,700,'2008-10-05'),(10,'Corfu Philharmonic Hall','Corfu, Greece',1200,100,'1995-05-30');
 /*!40000 ALTER TABLE `venues` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'projectdb'
---
-/*!50003 DROP PROCEDURE IF EXISTS `CalculateVenueScore` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CalculateVenueScore`(IN venueId INT, OUT venueScore INT)
-BEGIN
-    DECLARE capacityScore INT;
-    DECLARE concertsScore INT;
-    DECLARE yearsScore INT;
-    DECLARE yearsOfOperation INT;
-
-
-    SELECT 
-        Capacity, 
-        ConcertsHeld, 
-        TIMESTAMPDIFF(YEAR, DateOpened, CURDATE()) AS YearsOfOperation
-    INTO 
-        @venueCapacity, 
-        @venueConcerts, 
-        yearsOfOperation
-    FROM 
-        venues 
-    WHERE 
-        VenId = venueId;
-
-    SET capacityScore = FLOOR(@venueCapacity / 1000) * 1;
-    SET concertsScore = FLOOR(@venueConcerts / 100) * 3;
-    SET yearsScore = yearsOfOperation * 2;
-    SET venueScore = capacityScore + concertsScore + yearsScore;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ManageConcert` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ManageConcert`(
-    IN artistId INT,
-    IN concertDate DATE,
-    IN action CHAR(1)
-)
-BEGIN
-    DECLARE existingStatus ENUM('Scheduled', 'Cancelled', 'Completed');
-     DECLARE message VARCHAR(255);
-   
-    SELECT Status
-    INTO existingStatus
-    FROM concert
-    WHERE ArtistId = artistId AND ConDate = concertDate;
-
-  
-    CASE action
-        WHEN 'i' THEN
-           
-            IF existingStatus IS NOT NULL THEN
-                IF existingStatus = 'Scheduled' THEN
-                    SET message = 'A concert is already scheduled on this date.';
-                ELSEIF existingStatus = 'Cancelled' THEN
-                    SET message = 'A cocnert is cancelled on this date.';
-                ELSE
-                    SET message = 'The concert has already been completed.';
-                END IF;
-            ELSE
-                
-                INSERT INTO concert (VenId, ArtistId, ConDate, Status, ReqCapacity)
-                VALUES (1, artistId, concertDate, 'Scheduled', 1000); -- Gia eukolia ebala oti oles oi kainourges synaulies programmatizontai sto venue 1 kai me reqcapacity 1000
-                SET message = 'A new concert was scheduled successfully.';
-            END IF;
-        WHEN 'c' THEN
-          
-            IF existingStatus IS NULL THEN
-               SET message = 'No concert exists on this date.';
-            ELSEIF existingStatus = 'Cancelled' THEN
-                SET message = 'The concert is already cancelled.';
-            ELSE
-                UPDATE concert
-                SET Status = 'Cancelled'
-                WHERE ArtistId = artistId AND ConDate = concertDate;
-                SET message = 'The concert was cancelled successfully.';
-            END IF;
-            
-        WHEN 'a' THEN
-        
-            IF existingStatus IS NULL THEN
-                SET message = 'No concert exists on this date.';
-            ELSEIF existingStatus = 'Scheduled' THEN
-                SET message = 'A concert is already scheduled on this date.';
-            ELSEIF existingStatus = 'Cancelled' THEN
-                UPDATE concert
-                SET Status = 'Scheduled'
-                WHERE ArtistId = artistId AND ConDate = concertDate;
-                SET message ='The concert was rescheduled successfully.';
-            END IF;
-        ELSE
-           SET message = 'I dont know what to do with that bro.';
-    END CASE;
-    SELECT message AS ResultMessage;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -631,4 +510,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-16 19:39:29
+-- Dump completed on 2025-01-17 15:42:19
