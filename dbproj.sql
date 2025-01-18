@@ -47,9 +47,66 @@ CREATE TABLE `album` (
 
 LOCK TABLES `album` WRITE;
 /*!40000 ALTER TABLE `album` DISABLE KEYS */;
-INSERT INTO `album` VALUES (1,'Rocking Forever',2,1,1,1),(2,'Jazz Nights',7,2,2,2),(3,'Symphonic Journey',8,3,3,3),(4,'Solo Sounds',1,4,4,4),(5,'Classic Hits',6,3,5,5),(6,'Electronic Dreams',10,5,1,6),(7,'Pop Fever',2,4,2,1),(8,'The Orchestra',3,3,3,2),(9,'Music of the World',4,1,4,3),(10,'Modern Beats',5,5,5,4),(11,'Electronic Wonders',11,6,6,7),(12,'Smooth Jazz Hits',12,7,7,8),(13,'Timeless Classics',13,8,8,9),(14,'Beats of the Future',14,9,9,10),(15,'Rap Legacy',15,8,8,11),(16,'Jazz Unplugged',16,9,9,12),(17,'Pop Anthems',11,6,6,7),(18,'The Ultimate Hits',20,10,10,9),(19,'GNX',19,10,8,9),(20,'Mr.Morale And The Big Steppers',11,9,9,10);
+INSERT INTO `album` VALUES (1,'Rocking Forever',2,1,1,1),(2,'Jazz Nights',7,2,2,2),(3,'Symphonic Journey',8,3,3,3),(4,'Solo Sounds',1,4,4,4),(5,'Classic Hits',6,3,5,5),(6,'Electronic Dreams',10,5,1,6),(7,'Pop Fever',2,4,2,1),(8,'The Orchestra',3,6,3,2),(9,'Music of the World',4,1,4,3),(10,'Modern Beats',5,5,5,4),(11,'Electronic Wonders',11,6,6,7),(12,'Smooth Jazz Hits',12,7,7,8),(13,'Timeless Classics',13,8,8,9),(14,'Beats of the Future',14,9,9,10),(15,'Rap Legacy',15,8,8,11),(16,'Jazz Unplugged',16,9,9,12),(17,'Pop Anthems',11,6,6,7),(18,'The Ultimate Hits',20,10,10,9),(19,'GNX',19,10,8,9),(20,'Mr.Morale And The Big Steppers',11,9,9,10);
 /*!40000 ALTER TABLE `album` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insAlbum` AFTER INSERT ON `album` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Insert', 'album');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `updAlbum` AFTER UPDATE ON `album` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Update', 'album');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delAlbum` AFTER DELETE ON `album` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Delete', 'album');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `albumrelease`
@@ -161,6 +218,63 @@ LOCK TABLES `band` WRITE;
 INSERT INTO `band` VALUES (1,'The Rockers','2005-06-15','2015-08-01',2),(2,'The Jazz Masters','2010-03-20',NULL,7),(3,'Classic Symphony','2000-05-10','2010-05-10',8),(4,'Electric Beats','2010-06-12',NULL,14),(5,'Soul Jazzers','1998-04-05','2015-10-20',9),(6,'Pop Ensemble','2018-01-20',NULL,10);
 /*!40000 ALTER TABLE `band` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insBand` AFTER INSERT ON `band` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Insert', 'band');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `updBand` AFTER UPDATE ON `band` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Update', 'band');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delBand` AFTER DELETE ON `band` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Delete', 'band');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `bandmember`
@@ -211,7 +325,7 @@ CREATE TABLE `concert` (
   KEY `ArtistId_idx` (`ArtistId`),
   CONSTRAINT `ArtistId` FOREIGN KEY (`ArtistId`) REFERENCES `artist` (`ArtistID`),
   CONSTRAINT `VenId` FOREIGN KEY (`VenId`) REFERENCES `venues` (`VenId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,9 +334,126 @@ CREATE TABLE `concert` (
 
 LOCK TABLES `concert` WRITE;
 /*!40000 ALTER TABLE `concert` DISABLE KEYS */;
-INSERT INTO `concert` VALUES (1,1,1,'2024-03-15','Cancelled',1500),(2,2,2,'2024-05-20','Completed',9000),(3,3,3,'2023-10-10','Completed',1200),(4,3,4,'2024-01-05','Cancelled',2800),(5,5,5,'2024-07-12','Scheduled',4500),(6,6,6,'2023-09-15','Completed',1800),(7,7,7,'2024-06-25','Scheduled',3700),(8,8,8,'2023-08-30','Completed',800),(9,9,9,'2024-11-10','Scheduled',2300),(10,10,10,'2024-03-10','Scheduled',950),(11,NULL,1,'2025-03-15','Scheduled',NULL),(13,NULL,2,'2026-05-20','Scheduled',NULL),(14,NULL,2,'2025-03-20','Scheduled',NULL),(15,2,3,'2026-05-20','Scheduled',5000);
+INSERT INTO `concert` VALUES (1,1,1,'2024-03-15','Cancelled',1500),(2,2,2,'2024-05-20','Completed',9000),(3,3,3,'2023-10-10','Completed',1200),(4,3,4,'2024-01-05','Cancelled',2800),(5,5,5,'2024-07-12','Scheduled',4500),(6,6,6,'2023-09-15','Completed',1800),(7,7,7,'2024-06-25','Scheduled',3700),(8,8,8,'2023-08-30','Completed',800),(9,9,9,'2024-11-10','Scheduled',2300),(10,10,10,'2024-03-10','Scheduled',950),(11,NULL,1,'2025-03-15','Scheduled',NULL),(13,NULL,2,'2026-05-20','Scheduled',NULL),(14,NULL,2,'2025-03-20','Scheduled',NULL),(15,2,3,'2026-05-20','Scheduled',5000),(16,5,5,'2025-02-20','Cancelled',NULL),(17,NULL,5,'2026-03-15','Scheduled',NULL),(18,NULL,2,'2026-02-20','Scheduled',NULL);
 /*!40000 ALTER TABLE `concert` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `conScheduleCheck` BEFORE INSERT ON `concert` FOR EACH ROW BEGIN
+
+	DECLARE scheduled_count INT;
+
+	IF ABS(DATEDIFF(CURDATE(), NEW.ConDate)) < 5 THEN
+		SIGNAL SQLSTATE VALUE '45000'
+        SET MESSAGE_TEXT = 'Concert must be scheduled at least 5 days before Concert Date!';
+    END IF;
+    
+    SELECT COUNT(*)
+    INTO scheduled_count
+    FROM concert
+    WHERE ArtistId = NEW.ArtistId
+    AND Status = 'Scheduled';
+    
+    IF scheduled_count >= 3 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Artist already has 3 concerts scheduled!';
+    END IF;
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insConc` AFTER INSERT ON `concert` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Insert', 'concert');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `conCancelCheck` BEFORE UPDATE ON `concert` FOR EACH ROW BEGIN
+
+	IF (NEW.Status = 'Scheduled' AND OLD.Status = 'Cancelled') OR (NEW.Status = 'Cancelled' AND OLD.Status = 'Scheduled') THEN
+		IF DATEDIFF(NEW.ConDate, CURDATE()) <= 3 THEN
+			SIGNAL SQLSTATE VALUE '45000'
+			SET MESSAGE_TEXT = 'You cannot cancel or reschedule a concert 3 days before concert date!';
+		END IF;
+    END IF;
+    
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `updConc` AFTER UPDATE ON `concert` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Update', 'concert');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delConc` AFTER DELETE ON `concert` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Delete', 'concert');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `concerthistory`
@@ -237,7 +468,9 @@ CREATE TABLE `concerthistory` (
   `VenueId` int DEFAULT NULL,
   `NumTickets` int DEFAULT NULL,
   `ConDate` date DEFAULT NULL,
-  `status` enum('Cancelled','Completed') NOT NULL
+  `status` enum('Cancelled','Completed') NOT NULL,
+  KEY `numtickets_ind` (`NumTickets`),
+  KEY `venid_ind` (`VenueId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -313,9 +546,7 @@ CREATE TABLE `log` (
   `Username` varchar(250) NOT NULL,
   `Time` datetime NOT NULL,
   `Action` enum('Insert','Update','Delete') NOT NULL,
-  `Table` enum('person','band','album','concert','venue') NOT NULL,
-  KEY `usrname_idx` (`Username`),
-  CONSTRAINT `usrname` FOREIGN KEY (`Username`) REFERENCES `dba` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
+  `Table` enum('person','band','album','concert','venues') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -325,6 +556,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
+INSERT INTO `log` VALUES ('root@localhost','2025-01-18 11:43:26','Insert','venues'),('root@localhost','2025-01-18 11:46:54','Update','venues'),('root@localhost','2025-01-18 11:48:26','Delete','venues'),('root@localhost','2025-01-18 12:00:27','Update','album'),('root@localhost','2025-01-18 12:04:19','Insert','venues'),('root@localhost','2025-01-18 13:44:18','Insert','concert'),('root@localhost','2025-01-18 13:50:53','Insert','concert'),('root@localhost','2025-01-18 14:00:38','Insert','concert'),('root@localhost','2025-01-18 14:17:54','Update','concert'),('root@localhost','2025-01-18 14:21:21','Update','concert'),('root@localhost','2025-01-18 14:21:30','Update','concert');
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,6 +591,63 @@ LOCK TABLES `person` WRITE;
 INSERT INTO `person` VALUES (1,'John','Doe','1980-01-15','USA','Johnny D',1,1),(2,'Alice','Smith','1990-02-25','UK','Ally S',1,2),(3,'Michael','Brown','1985-07-20','USA','Mikey B',1,3),(4,'Jessica','Taylor','1992-10-10','Canada','Jess T',1,4),(5,'Tom','Harris','1988-05-30','UK','Tommy H',1,5),(6,'Lily','Wilson','1995-03-15','Australia','Lil W',1,6),(7,'James','Davis','1991-12-25','USA','Jamie D',1,7),(8,'Peter','Hernandez','1985-10-08','USA','Bruno Mars',1,8),(9,'Jermaine','Cole','1985-01-28','USA','J. Cole',1,9),(10,'Justin','Timberlake','1981-01-31','USA','Justin T.',1,10),(11,'Ed','Sheeran','1991-02-17','UK','Ed Sheeran',1,11),(12,'Marshall','Mathers','1972-10-17','USA','Eminem',1,12),(13,'Dua','Lipa','1995-08-22','UK','Dua Lipa',1,13),(14,'Kendrick','Lamar','1987-06-17','USA','Kendrick Lamar',1,14);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insPers` AFTER INSERT ON `person` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Insert', 'person');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `updPers` AFTER UPDATE ON `person` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Update', 'person');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delPers` AFTER DELETE ON `person` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Delete', 'person');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `producer`
@@ -497,9 +786,342 @@ CREATE TABLE `venues` (
 
 LOCK TABLES `venues` WRITE;
 /*!40000 ALTER TABLE `venues` DISABLE KEYS */;
-INSERT INTO `venues` VALUES (1,'Athens Concert Hall','Athens, Greece',2000,350,'2005-06-15'),(2,'Thessaloniki Arena','Thessaloniki, Greece',10000,1200,'2015-09-10'),(3,'Patras Cultural Center','Patras, Greece',1500,450,'2000-03-25'),(4,'Heraklion Music Hall','Heraklion, Greece',3000,250,'2015-11-01'),(5,'Ioannina Open Theater','Ioannina, Greece',5000,800,'2018-05-20'),(6,'Larissa Exhibition Center','Larissa, Greece',4000,600,'2012-04-12'),(7,'Chania Concert Space','Chania, Greece',2500,150,'2020-01-01'),(8,'Kalamata Outdoor Stage','Kalamata, Greece',1000,50,'2017-07-15'),(9,'Rhodes Grand Theater','Rhodes, Greece',3500,700,'2008-10-05'),(10,'Corfu Philharmonic Hall','Corfu, Greece',1200,100,'1995-05-30');
+INSERT INTO `venues` VALUES (1,'Athens Concert Hall','Athens, Greece',2000,350,'2005-06-15'),(2,'Thessaloniki Arena','Thessaloniki, Greece',10000,1200,'2015-09-10'),(3,'Patras Cultural Center','Patras, Greece',1500,450,'2000-03-25'),(4,'Heraklion Music Hall','Heraklion, Greece',3000,250,'2015-11-01'),(5,'Ioannina Open Theater','Ioannina, Greece',5000,800,'2018-05-20'),(6,'Larissa Exhibition Center','Larissa, Greece',4000,600,'2012-04-12'),(7,'Chania Concert Space','Chania, Greece',2500,150,'2020-01-01'),(8,'Kalamata Outdoor Stage','Kalamata, Greece',1000,50,'2017-07-15'),(9,'Rhodes Grand Theater','Rhodes, Greece',3500,700,'2008-10-05'),(10,'Corfu Philharmonic Hall','Corfu, Greece',1200,100,'1995-05-30'),(11,'Lazarakeio City Hall','Amaliada, Greece',1000,283,'1997-03-11');
 /*!40000 ALTER TABLE `venues` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insVen` AFTER INSERT ON `venues` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Insert', 'venues');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `updVen` AFTER UPDATE ON `venues` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Update', 'venues');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `delVen` AFTER DELETE ON `venues` FOR EACH ROW BEGIN
+    
+    INSERT INTO log VALUES(USER(), NOW(), 'Delete', 'venues');
+    
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Dumping routines for database 'projectdb'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `CalculateVenueScore` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CalculateVenueScore`(IN venueId INT, OUT venueScore INT)
+BEGIN
+    DECLARE capacityScore INT;
+    DECLARE concertsScore INT;
+    DECLARE yearsScore INT;
+    DECLARE yearsOfOperation INT;
+
+
+    SELECT 
+        Capacity, 
+        ConcertsHeld, 
+        TIMESTAMPDIFF(YEAR, DateOpened, CURDATE()) AS YearsOfOperation
+    INTO 
+        @venueCapacity, 
+        @venueConcerts, 
+        yearsOfOperation
+    FROM 
+        venues 
+    WHERE 
+        VenId = venueId;
+
+    SET capacityScore = FLOOR(@venueCapacity / 1000) * 1;
+    SET concertsScore = FLOOR(@venueConcerts / 100) * 3;
+    SET yearsScore = yearsOfOperation * 2;
+    SET venueScore = capacityScore + concertsScore + yearsScore;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ManageConcert` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ManageConcert`(
+    IN artistId INT,
+    IN concertDate DATE,
+    IN action CHAR(1)
+)
+BEGIN
+    DECLARE existingStatus ENUM('Scheduled', 'Cancelled', 'Completed');
+    DECLARE message VARCHAR(255);
+    
+    -- Elegxei an yparxei synaulia gia ton kallitexnh kai thn hmeromhnia
+    SELECT Status
+    INTO existingStatus
+    FROM concert
+    WHERE ArtistId = artistId AND ConDate = concertDate;
+
+    -- Cases gia to action
+    CASE action
+        WHEN 'i' THEN
+            -- An yparxei
+            IF existingStatus IS NOT NULL THEN
+                IF existingStatus = 'Scheduled' THEN
+                   SET message = 'A concert is already scheduled on this date.';
+                ELSEIF existingStatus = 'Cancelled' THEN
+                   SET message = 'A cocnert is cancelled on this date.';
+                ELSE
+                    SET message = 'The concert has already been completed.';
+                END IF;
+            ELSE
+                -- Kainourgia synaulia me status scheduled
+                INSERT INTO concert (VenId, ArtistId, ConDate, Status, ReqCapacity)
+                VALUES (NULL, artistId, concertDate, 'Scheduled', NULL);
+                SET message = 'A new concert was scheduled successfully.';
+            END IF;
+        WHEN 'c' THEN
+            -- Akyrwsh
+            IF existingStatus IS NULL THEN
+                SET message = 'No concert exists on this date.';
+            ELSEIF existingStatus = 'Cancelled' THEN
+               SET message = 'The concert is already cancelled.';
+            ELSE
+                UPDATE concert
+                SET Status = 'Cancelled'
+                WHERE ArtistId = artistId AND ConDate = concertDate;
+                SET message = 'The concert was cancelled successfully.';
+            END IF;
+        WHEN 'a' THEN
+            -- Ksana energopoiei mia akyrwmenh synaulia
+            IF existingStatus IS NULL THEN
+                SET message = 'No concert exists on this date.';
+            ELSEIF existingStatus = 'Scheduled' THEN
+                SET message = 'A concert is already scheduled on this date.';
+            ELSEIF existingStatus = 'Cancelled' THEN
+                UPDATE concert
+                SET Status = 'Scheduled'
+                WHERE ArtistId = artistId AND ConDate = concertDate;
+                SET message = 'The concert was rescheduled successfully.';
+            END IF;
+        ELSE
+        -- Gia opoiondhpote allo xarakthra
+            SET message = 'I dont know what to do with that bro.';
+    END CASE;
+      -- Epistrefei to mhnuma sto telos
+    SELECT message AS ResultMessage;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `TicketSearch` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TicketSearch`(
+	IN minTickets INT,
+    IN maxTickets INT
+)
+BEGIN
+	
+    SELECT 
+        person.FirstName, 
+        person.LastName
+    FROM 
+        concerthistory
+    INNER JOIN 
+        person
+    ON 
+        concerthistory.ArtistId = person.ArtistId
+    WHERE 
+        concerthistory.NumTickets BETWEEN MinTickets AND MaxTickets;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `VenueFinder` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VenueFinder`(
+	IN GivenConId INT,
+    IN GivenReqCap INT,
+    OUT VenIdOutput INT,
+    OUT VenCapOutput INT
+)
+proc_label:BEGIN
+	DECLARE FoundStatus ENUM('Scheduled','Cancelled','Completed') DEFAULT NULL;
+    DECLARE FoundVenId INT DEFAULT NULL;
+    DECLARE FoundConDate DATE DEFAULT NULL;
+    
+    DECLARE TempVenId INT;
+    DECLARE TempVenCap INT;
+    DECLARE MaxScore INT DEFAULT -1;
+    DECLARE CurrentScore INT;
+    DECLARE debcount INT DEFAULT 0;
+    
+	-- Cursor for venues
+    DECLARE VenueCursor CURSOR FOR
+        SELECT VenId, Capacity FROM venues
+        WHERE Capacity >= GivenReqCap * 1.1
+        AND NOT EXISTS (
+			SELECT 1 FROM concert
+			WHERE ConDate = FoundConDate AND Status = 'Scheduled' AND concert.VenId = venues.VenId
+		);
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET TempVenId = NULL;
+    
+	-- Select required values for procedure
+    SELECT Status, VenId, ConDate INTO FoundStatus, FoundVenId, FoundConDate FROM concert WHERE ConId = GivenConId;
+    
+    IF FoundStatus IS NULL OR FoundStatus = 'Cancelled' THEN
+		SET VenIdOutput = NULL;
+        SET VenCapOutput = 0;
+		LEAVE proc_label;
+	END IF;
+    
+    IF FoundVenId IS NOT NULL THEN
+		SET VenIdOutput = FoundVenId;
+        SELECT Capacity INTO VenCapOutput FROM venues WHERE VenId = FoundVenId;
+        SELECT VenIdOutput, VenCapOutput, FoundConDate;
+        LEAVE proc_label;
+	END IF;
+    
+    
+    OPEN VenueCursor;
+
+	FETCH VenueCursor INTO TempVenId, TempVenCap;
+	WHILE TempVenId IS NOT NULL DO
+    
+		-- Call CalculateVenueScore for each venue
+		CALL CalculateVenueScore(TempVenId, @CurrentScore);
+
+		IF @CurrentScore IS NOT NULL THEN
+        SET debcount = debcount + @CurrentScore;
+		-- Check if this venue has the highest score
+			IF @CurrentScore > MaxScore THEN
+				SET MaxScore = @CurrentScore;
+				SET VenIdOutput = TempVenId;
+				SET VenCapOutput = TempVenCap;
+			END IF;
+        END IF;
+
+		FETCH VenueCursor INTO TempVenId, TempVenCap;
+	END WHILE;
+
+	CLOSE VenueCursor;
+
+	-- If no suitable venue is found, return VenId = NULL and VenCap = 0
+	IF MaxScore = -1 THEN
+		SET VenIdOutput = NULL;
+		SET VenCapOutput = 0;
+        Select 'No Eligible Venue Found!';
+	END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `VenueNameDates` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VenueNameDates`(
+	IN givenVenName VARCHAR(250)
+)
+BEGIN
+
+	DECLARE foundVenId INT DEFAULT NULL;
+    
+    SELECT VenId INTO foundVenId FROM venues WHERE VenName = givenVenName;
+    
+    SELECT ConDate FROM concerthistory WHERE VenueId = foundVenId;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -510,4 +1132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-17 15:42:19
+-- Dump completed on 2025-01-18 14:24:12

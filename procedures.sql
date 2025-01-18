@@ -48,7 +48,7 @@ VALUES
 (9, 'Rhodes Grand Theater', 'Rhodes, Greece', 3500, 700, '2008-10-05'),
 (10, 'Corfu Philharmonic Hall', 'Corfu, Greece', 1200, 100, '1995-05-30');
 
---Consert inserts
+--Concert inserts
 INSERT INTO `concert` (`ConId`, `VenId`, `ArtistId`, `ConDate`, `Status`, `ReqCapacity`) 
 VALUES 
 (1, 1, 1, '2024-03-15', 'Scheduled', 1500),
@@ -97,7 +97,7 @@ BEGIN
             ELSE
                 -- Kainourgia synaulia me status scheduled
                 INSERT INTO concert (VenId, ArtistId, ConDate, Status, ReqCapacity)
-                VALUES (1, artistId, concertDate, 'Scheduled', 1000); -- Gia eukolia ebala oti oles oi kainourges synaulies programmatizontai sto venue 1 kai me reqcapacity 1000
+                VALUES (NULL, artistId, concertDate, 'Scheduled', NULL);
                 SET message = 'A new concert was scheduled successfully.';
             END IF;
         WHEN 'c' THEN
@@ -217,3 +217,62 @@ proc_label:BEGIN
 END $$
 
 DELIMITER ;
+
+
+
+
+--
+-- TETARTO PROCEDURE
+--
+
+-- A ERWTHMA
+
+CREATE  INDEX numtickets_ind ON concerthistory(NumTickets);
+
+
+DELIMITER $$
+
+CREATE PROCEDURE TicketSearch(
+	IN minTickets INT,
+    IN maxTickets INT
+)
+BEGIN
+	
+    SELECT 
+        person.FirstName, 
+        person.LastName
+    FROM 
+        concerthistory
+    INNER JOIN 
+        person
+    ON 
+        concerthistory.ArtistId = person.ArtistId
+    WHERE 
+        concerthistory.NumTickets BETWEEN MinTickets AND MaxTickets;
+
+END $$
+
+DELIMITER ;
+
+-- B ERWTHMA
+
+
+CREATE  INDEX venid_ind ON concerthistory(VenueId);
+
+DELIMITER $$
+
+CREATE PROCEDURE VenueNameDates(
+	IN givenVenName VARCHAR(250)
+)
+BEGIN
+
+	DECLARE foundVenId INT DEFAULT NULL;
+    
+    SELECT VenId INTO foundVenId FROM venues WHERE VenName = givenVenName;
+    
+    SELECT ConDate FROM concerthistory WHERE VenueId = foundVenId;
+
+END $$
+
+DELIMITER ;
+
