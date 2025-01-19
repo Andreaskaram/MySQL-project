@@ -1,1 +1,4 @@
 .DS_Store
+/GUI/mysqlgui/target/
+/GUI/sqlgui/target/
+/GUI/gui/target/
